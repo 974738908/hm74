@@ -56,7 +56,7 @@ export default {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
           // 校验成功，就可以提交登录了  axios是基于primise封装的，post()返回一个promise对象，随意会用.then的方法去写
-          this.axios.post('http://ttapi.research.itcast.cn/mp/v1_0/authorizations', this.loginForm)
+          this.axios.post('authorizations', this.loginForm)
             .then((res) => {
             //   console.log(res.data)
             // sessionStorage BOM对象 全局对象 作用：保存数据
