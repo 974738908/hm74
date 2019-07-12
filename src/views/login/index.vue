@@ -5,7 +5,7 @@
       <!-- 登录表单 -->
   <el-form ref="loginForm" :status-icon="true" :model="loginForm" :rules="loginRules">
     <el-form-item prop="moblie">
-      <el-input v-model="loginForm.moblie" placeholder="请输入手机号"></el-input>
+      <el-input v-model="loginForm.mobile" placeholder="请输入手机号"></el-input>
     </el-form-item>
     <el-form-item prop="code">
       <el-input v-model="loginForm.code" placeholder="请输入验证码" style="width:240px"></el-input>
@@ -27,7 +27,7 @@ export default {
   data () {
     const checkMobile = (rule, value, callback) => {
       // 校验逻辑  把value拿出来进行手机号格式校验
-      if (/^1[3-9]\d(9)$/.test(value)) {
+      if (/^1[3-9]\d{9}$/.test(value)) {
         callback()
       } else {
         callback(new Error('手机号格式错误,请重新输入'))
@@ -35,11 +35,11 @@ export default {
     }
     return {
       loginForm: {
-        moblie: '',
+        mobile: '',
         code: ''
       },
       loginRules: {
-        moblie: [
+        mobile: [
           { required: true, message: '请输入手机号', trigger: 'blur' },
           { validator: checkMobile, trigger: 'blur' }
         ],
@@ -53,22 +53,22 @@ export default {
   },
   methods: {
     login () {
-      // 对整个表单进行效验
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          // 提交登录请求 axios是基于primise封装的post()返回值一个promise对象
-          this.axios
-            .post('http://ttapi.research.itcast.cn/mp/v1_0/authorizations', this.loginForm)
-            .then(res => {
-              // res是响应对象 包含后台返回的数据 res.data
-              // console.log(res.data) 去做什么事情???
-              // 1.跳转首页
-              // 2.保存用户的信息  用来判断登录的状态
+          // 校验成功，就可以提交登录了  axios是基于primise封装的，post()返回一个promise对象，随意会用.then的方法去写
+          this.axios.post('http://ttapi.research.itcast.cn/mp/v1_0/authorizations', this.loginForm)
+            .then((res) => {
+            //   console.log(res.data)
+            // sessionStorage BOM对象 全局对象 作用：保存数据
+            // 保存的数据是有有效期的，当关闭浏览器的时候，数据就消失
+            // sessionStorage.setItem(key,value) 存储数据 value必须是字符串
+            // sessionStorage.getItem(key) 获取数据
+            // sessionStorage.RemoveItem(key)删除数据
+            // sessionStorage.Item(key)
+              window.sessionStorage.setItem('74--toutiao', JSON.stringify(res.data.data))
               this.$router.push('/')
-            })
-            .catch(() => {
-              // 提示错误信息
-              this.$message.error('手机号或验证码有误')
+            }).catch(() => {
+              this.$message.error('手机号或验证码错误')
             })
         }
       })
