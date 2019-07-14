@@ -5,9 +5,6 @@
 </template>
 <script>
 export default {
-  created () {
-    this.axios.get('articles').then(res => console.log(res.data))
-  }
 }
 </script>
 <style lang="less">

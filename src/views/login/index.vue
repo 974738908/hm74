@@ -53,23 +53,36 @@ export default {
   },
   methods: {
     login () {
-      this.$refs.loginForm.validate((valid) => {
+    //   this.$refs.loginForm.validate((valid) => {
+    //     if (valid) {
+    //       // 校验成功，就可以提交登录了  axios是基于primise封装的，post()返回一个promise对象，随意会用.then的方法去写
+    //       this.axios.post('authorizations', this.loginForm)
+    //         .then((res) => {
+    //         //   console.log(res.data)
+    //         // sessionStorage BOM对象 全局对象 作用：保存数据
+    //         // 保存的数据是有有效期的，当关闭浏览器的时候，数据就消失
+    //         // sessionStorage.setItem(key,value) 存储数据 value必须是字符串
+    //         // sessionStorage.getItem(key) 获取数据
+    //         // sessionStorage.RemoveItem(key)删除数据
+    //         // sessionStorage.Item(key)
+    //           window.sessionStorage.setItem('hm74-toutiao', JSON.stringify(res.data.data))
+    //           this.$router.push('/')
+    //         }).catch(() => {
+    //           this.$message.error('手机号或验证码错误')
+    //         })
+    //     }
+    //   })
+      this.$refs.loginForm.validate(async valid => {
         if (valid) {
-          // 校验成功，就可以提交登录了  axios是基于primise封装的，post()返回一个promise对象，随意会用.then的方法去写
-          this.axios.post('authorizations', this.loginForm)
-            .then((res) => {
-            //   console.log(res.data)
-            // sessionStorage BOM对象 全局对象 作用：保存数据
-            // 保存的数据是有有效期的，当关闭浏览器的时候，数据就消失
-            // sessionStorage.setItem(key,value) 存储数据 value必须是字符串
-            // sessionStorage.getItem(key) 获取数据
-            // sessionStorage.RemoveItem(key)删除数据
-            // sessionStorage.Item(key)
-              window.sessionStorage.setItem('hm74-toutiao', JSON.stringify(res.data.data))
-              this.$router.push('/')
-            }).catch(() => {
-              this.$message.error('手机号或验证码错误')
-            })
+        // 发送promise对象 给你发请求
+        // try{ 业务逻辑 } catch(err){ 处理错误 }
+          try {
+            const res = await this.axios.post('authorizations', this.loginForm)
+            window.sessionStorage.setItem('hm74-toutiao', JSON.stringify(res.data.data))
+            this.$router.push('/')
+          } catch (err) {
+            this.$message.error('手机号或验证码错误')
+          }
         }
       })
     }
