@@ -8,11 +8,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 // 2. 在使用vue-cli的时候 @符号在路径中作为前缀使用的时候 代表src目录
 import router from '@/router'
 // 导入axios
-import axios from 'axios'
-axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0/'
-axios.defaults.headers = {
-  Authorization: 'Bearer' + JSON.parse(window.sessionStorage.getItem('hm74-toutiao'))
-}
+import axios from '@/api/axios.js'
 Vue.prototype.axios = axios
 
 Vue.use(ELEMENT)

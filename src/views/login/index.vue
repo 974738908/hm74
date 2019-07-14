@@ -4,7 +4,7 @@
       <img src="../../assets/images/logo_index.png" alt="">
       <!-- 登录表单 -->
   <el-form ref="loginForm" :status-icon="true" :model="loginForm" :rules="loginRules">
-    <el-form-item prop="moblie">
+    <el-form-item prop="mobile">
       <el-input v-model="loginForm.mobile" placeholder="请输入手机号"></el-input>
     </el-form-item>
     <el-form-item prop="code">
@@ -65,7 +65,7 @@ export default {
             // sessionStorage.getItem(key) 获取数据
             // sessionStorage.RemoveItem(key)删除数据
             // sessionStorage.Item(key)
-              window.sessionStorage.setItem('74--toutiao', JSON.stringify(res.data.data))
+              window.sessionStorage.setItem('hm74-toutiao', JSON.stringify(res.data.data))
               this.$router.push('/')
             }).catch(() => {
               this.$message.error('手机号或验证码错误')
